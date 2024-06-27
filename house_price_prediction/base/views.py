@@ -10,10 +10,6 @@ from . import data
 import pandas as pd
 import joblib
 from django.core.mail import send_mail
-from django.conf import settings
-import smtplib
-from email.mime.text import MIMEText
-from SMTPEmail import SMTP
 from django.core.mail import EmailMessage
 
 hybrid_model = joblib.load(
