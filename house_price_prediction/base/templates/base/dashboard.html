@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+{% extends 'base.html' %} {% load i18n widget_tweaks %} {% block content %}
+<div class="row justify-content-center">
     <h1>This is dashboard page</h1>
-</body>
-
-</html>
+    <h2>Welcome {{request.user.username}}</h2>
+    <a href="{% url 'user-logout' %}" class="btn primary-btn">Logout</a>
+</div>
+{% endblock %}
