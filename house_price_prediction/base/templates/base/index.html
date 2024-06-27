@@ -1,9 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center">
     <h1 class="display-4">Welcome to House Price Prediction!</h1>
-    <p class="lead">Register or login to predict house prices.</p>
+    <p class="lead">The House Price Prediction System is an advanced web application designed to estimate house prices
+        in Indian metropolitan cities using state-of-the-art machine learning techniques. This system leverages a
+        stacked regressor model combining XGBoost, Linear Regression, and GradientBoostingRegressor algorithms to
+        provide accurate and reliable price predictions.</p>
+    <p class="fw-bold fs-5">Register or login to predict house prices using advanced machine learning techniques.</p>
     <hr class="my-4">
-    <p><a class="btn btn-primary btn-lg" href="{% url 'user-register' %}" role="button">Register</a></p>
+    <div class="container">
+        <div class="row offset-3 mt-5">
+            <div class="col-4 mb-3">
+                <div class="card bg-light border border-dark rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fs-3 fw-bold">Register</h5>
+                        <p class="card-text fs-5">Create an account to start predicting house prices in Indian
+                            metropolitan
+                            cities.</p>
+                        <a href="{% url 'user-register' %}" class="btn btn-primary btn-lg btn-block">Register</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 mb-3">
+                <div class="card bg-light border border-dark rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fs-3 fw-bold">Login</h5>
+                        <p class="card-text fs-5 ">Already have an account? Login to access the house price prediction
+                            tool.</p>
+                        <a href="{% url 'user-login' %}" class="btn btn-secondary btn-lg btn-block">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

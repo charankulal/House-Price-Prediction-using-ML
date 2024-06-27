@@ -13,7 +13,7 @@
             <ul class="navbar-nav ">
                 {% if user.is_authenticated %}
                 <li class="nav-item mx-2">
-                    <a class="nav-link text-light fs-4" href="{% url 'dashboard' %}">Predict</a>
+                    <a class="nav-link text-light fs-4" href="{% url 'user-history' %}">History</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="nav-link text-light fs-4" href="{% url 'user-logout' %}">Logout</a>
