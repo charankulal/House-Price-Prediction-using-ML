@@ -1,7 +1,65 @@
 {% extends 'base.html' %} {% load i18n widget_tweaks %} {% block content %}
-<div class="row justify-content-center">
-    <h1>This is dashboard page</h1>
-    <h2>Welcome {{request.user.username}}</h2>
-    <a href="{% url 'user-logout' %}" class="btn primary-btn">Logout</a>
+<h1>Welcome {{request.user.username}},</h1>
+<div class="col-6 offset-3 border border-light-subtle  rounded-3 my-5">
+    <p class="fs-2 fw-bolder text-center m-2 ">Predict House price</p>
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    <form class="form fs-5 " method="post" novalidate> {% csrf_token %}
+        {% for field in pred_form %}
+        {% if field.errors %}
+        <div class="form-group has-error m-2 offset-2">
+            <label class=" control-label col-10 offset-1 my-1" for="id_{{ field.name }}">{{ field.label }}</label>
+            <div class="col-10 offset-1">
+                {{ field|attr:"class:form-control" }}
+
+            </div>
+        </div>
+        {% else %}
+        <div class="form-group mb-3  m-2">
+            <label class=" control-label col-10 offset-1 my-1" for="id_{{ field.name }}">{{ field.label }}</label>
+            <div class="col-10 offset-1">
+                {{ field|attr:"class:form-control" }}
+
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="form-group">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+            </div>
+        </div>
+    </form>
+    {% if prediction %}
+    <div class="container mt-5">
+        <h2 class="text-danger">Predicted Price: {{prediction}}</h2>
+    </div>
+
+    {% endif %}
 </div>
+<script>
+    document.getElementById('id_city').addEventListener('change', function () {
+        var city = this.value;
+        var locationSelect = document.getElementById('id_location');
+        locationSelect.innerHTML = '<option value="">Select Location</option>';
+
+        if (city) {
+            fetch(`/get-locations/${city}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.locations.forEach(function (location) {
+                        var option = document.createElement('option');
+                        option.value = location;
+                        option.text = location;
+                        locationSelect.appendChild(option);
+                    });
+                });
+        }
+    });
+</script>
 {% endblock %}
