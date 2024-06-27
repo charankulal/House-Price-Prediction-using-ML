@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to House Price Prediction!</h1>
+    <p class="lead">Register or login to predict house prices.</p>
+    <hr class="my-4">
+    <p><a class="btn btn-primary btn-lg" href="{% url 'user-register' %}" role="button">Register</a></p>
+</div>
+{% endblock %}
