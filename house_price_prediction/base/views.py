@@ -9,6 +9,12 @@ from .models import Prediction
 from . import data
 import pandas as pd
 import joblib
+from django.core.mail import send_mail
+from django.conf import settings
+import smtplib
+from email.mime.text import MIMEText
+from SMTPEmail import SMTP
+from django.core.mail import EmailMessage
 
 hybrid_model = joblib.load(
     "D:\\PROJECTS\\House Price Prediction System\\house_price_prediction\\model\\hybrid_model.pkl"
@@ -71,6 +77,7 @@ def dashboard(request):
             predicted_price = hybrid_model.predict(df)[0]
             predicted_price = round((predicted_price**2) ** 0.5, 0)
             user = request.user
+            email = request.user.email
             prediction_instance = Prediction(
                 user=user,
                 city=data["City"][0],
@@ -80,6 +87,23 @@ def dashboard(request):
                 predicted_price=predicted_price,
             )
             prediction_instance.save()
+            email = EmailMessage(
+                "House Price Prediction System",
+                "The house of "
+                + request.POST.get("bedrooms")
+                + " BHK of area "
+                + request.POST.get("area")
+                + " square feet at "
+                + request.POST.get("location")
+                + " in "
+                + request.POST.get("city")
+                + " will be of around "
+                + str(predicted_price)
+                + "\n\n\n\nThank you, Have a great day",
+                to=[email],
+            )
+            email.send()
+
             return render(
                 request,
                 "base/results.html",
